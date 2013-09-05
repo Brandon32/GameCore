@@ -1,23 +1,26 @@
 package com.twoshotgaming.gamecore;
 
 import javax.swing.SwingUtilities;
+import com.twoshotgaming.gamecore.engine.Engine;
 
-public class Primer {
+public class Starter {
+
+	private static Engine gameEngineInstance = null;
+	private static Thread gameThread;
 
 	public static void main(String[] args) {
 
+		if (gameEngineInstance == null) {
+			gameEngineInstance = new Engine();
+			gameThread = new Thread(gameEngineInstance);
+			gameThread.start();
+		}
+		
 		/*
 		 * This is the recommended way to create a Swing event dispatch thread
 		 * -- i.e. to run a Swing program.
 		 */
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				runApp();
-			}
-
-		});
+		SwingUtilities.invokeLater(gameEngineInstance);
 	}
 
 	public static void runApp() {

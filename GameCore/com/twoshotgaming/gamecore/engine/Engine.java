@@ -1,7 +1,7 @@
 package com.twoshotgaming.gamecore.engine;
 
 @SuppressWarnings("unused")
-public class Engine {
+public class Engine implements Runnable {
 
 	private static final double DEFAULT_FPS = 60;
 	private boolean running;
@@ -15,7 +15,7 @@ public class Engine {
 		int ticks = 0;
 		int frames = 0;
 		double unprocessed = 0;
-		long lastTimer1 = System.currentTimeMillis();
+		long timer = System.currentTimeMillis();
 		double nsPerTick = 1000000000.0 / DEFAULT_FPS;
 
 		running = true;
@@ -43,8 +43,8 @@ public class Engine {
 				e.printStackTrace();
 			}
 
-			if (System.currentTimeMillis() - lastTimer1 > 1000) {
-				lastTimer1 += 1000;
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
 				currentFrames = frames;
 				currentTicks = ticks;
 				frames = 0;
